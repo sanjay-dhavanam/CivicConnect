@@ -12,6 +12,10 @@ import Budget from "@/pages/budget";
 import Parliamentary from "@/pages/parliamentary";
 import About from "@/pages/about";
 import HowItWorks from "@/pages/how-it-works";
+import OpenData from "@/pages/open-data";
+import ApiDocs from "@/pages/api-docs";
+import GovtPortals from "@/pages/govt-portals";
+import PrivacyPolicy from "@/pages/privacy-policy";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -39,6 +43,10 @@ function Router() {
       <Route path="/parliamentary" component={Parliamentary} />
       <Route path="/about" component={About} />
       <Route path="/how-it-works" component={HowItWorks} />
+      <Route path="/open-data" component={OpenData} />
+      <Route path="/api-docs" component={ApiDocs} />
+      <Route path="/govt-portals" component={GovtPortals} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route component={NotFound} />
     </Switch>
   );

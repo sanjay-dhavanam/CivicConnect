@@ -104,6 +104,7 @@ export class MemStorage implements IStorage {
     this.initializeLocations();
     this.initializeRepresentatives();
     this.initializeBudgetData();
+    this.initializeParliamentarySpeeches();
   }
 
   // User operations
@@ -512,6 +513,71 @@ export class MemStorage implements IStorage {
       const now = new Date();
       const newBudget: Budget = { ...budget, id, createdAt: now, updatedAt: now };
       this.budgets.set(id, newBudget);
+    });
+  }
+
+  private initializeParliamentarySpeeches() {
+    const speeches = [
+      {
+        title: 'Agricultural Reform Bill Debate',
+        content: 'मैं आज जो बिल पेश कर रहा हूँ, वह हमारे किसानों के लिए एक नया अध्याय खोलेगा। यह सुधार किसानों को अपनी उपज बेचने की आजादी देगा और उनकी आय को दोगुना करने में मदद करेगा। हम चाहते हैं कि हमारे अन्नदाता आत्मनिर्भर और समृद्ध हों।',
+        originalLanguage: 'hindi',
+        translations: {},
+        speakerId: 1,
+        date: new Date('2023-07-15'),
+        house: 'Lok Sabha'
+      },
+      {
+        title: 'Discussion on Education Policy',
+        content: 'शिक्षा नीति का यह नया प्रारूप भारत को वैश्विक ज्ञान महाशक्ति बनाने की दिशा में एक महत्वपूर्ण कदम है। हमें अपने छात्रों को भविष्य के लिए तैयार करना होगा और उन्हें विश्व स्तर पर प्रतिस्पर्धी बनाना होगा।',
+        originalLanguage: 'hindi',
+        translations: {},
+        speakerId: 1,
+        date: new Date('2023-08-20'),
+        house: 'Lok Sabha'
+      },
+      {
+        title: 'Healthcare System Reforms',
+        content: 'इस बजट में स्वास्थ्य सेवा पर विशेष ध्यान दिया गया है। हमने ग्रामीण क्षेत्रों में स्वास्थ्य केंद्रों की संख्या बढ़ाने का प्रस्ताव रखा है और आयुष्मान भारत योजना का विस्तार किया है ताकि अधिक से अधिक नागरिकों को गुणवत्तापूर्ण स्वास्थ्य सेवाएँ मिल सकें।',
+        originalLanguage: 'hindi',
+        translations: {},
+        speakerId: 2,
+        date: new Date('2023-09-05'),
+        house: 'Rajya Sabha'
+      },
+      {
+        title: 'National Security Discussion',
+        content: 'नमस्कार, आज मैं राष्ट्रीय सुरक्षा के महत्वपूर्ण मुद्दों पर चर्चा करना चाहता हूँ। हमारे सशस्त्र बलों ने हमेशा देश की सीमाओं की रक्षा में अद्भुत साहस और समर्पण दिखाया है। हमें अपनी सुरक्षा नीतियों को और मजबूत करने की आवश्यकता है।',
+        originalLanguage: 'hindi',
+        translations: {},
+        speakerId: 2,
+        date: new Date('2023-09-15'),
+        house: 'Rajya Sabha'
+      },
+      {
+        title: 'Environmental Protection Measures',
+        content: 'পরিবেশ সংরক্ষণ আমাদের জন্য একটি গুরুত্বপূর্ণ বিষয়। আমাদের প্রাকৃতিক সম্পদ সংরক্ষণের জন্য এবং আমাদের গ্রহের ভবিষ্যত রক্ষার জন্য সমন্বিত পদক্ষেপ গ্রহণ করা দরকার। জলবায়ু পরিবর্তনের বিরুদ্ধে লড়াইয়ে ভারত একটি গুরুত্বপূর্ণ ভূমিকা পালন করবে।',
+        originalLanguage: 'bengali',
+        translations: {},
+        speakerId: 3,
+        date: new Date('2023-10-10'),
+        house: 'Lok Sabha'
+      },
+      {
+        title: 'Women Empowerment Initiatives',
+        content: 'மகளிர் மேம்பாடு இன்றி நாட்டின் முழுமையான வளர்ச்சி சாத்தியமில்லை. நாம் பெண்களுக்கு அதிகாரம் அளிக்க வேண்டும், அவர்களுக்கு சம வாய்ப்புகளை உறுதி செய்ய வேண்டும், மேலும் அவர்கள் நமது சமூகத்தில் முழு பங்களிப்பைச் செய்ய வேண்டும்.',
+        originalLanguage: 'tamil',
+        translations: {},
+        speakerId: 3,
+        date: new Date('2023-10-25'),
+        house: 'Rajya Sabha'
+      }
+    ];
+    
+    speeches.forEach(speech => {
+      const id = this.speechIdCounter++;
+      const newSpeech: ParliamentarySpeech = { ...speech, id };
+      this.parliamentarySpeeches.set(id, newSpeech);
     });
   }
 }
