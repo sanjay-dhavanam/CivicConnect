@@ -146,6 +146,11 @@ export const insertOtpSchema = createInsertSchema(otps).omit({
   createdAt: true,
 });
 
+// Custom schema for phone-only validation when requesting OTP
+export const otpRequestSchema = z.object({
+  phone: z.string().min(10, "Phone number must be at least 10 digits")
+});
+
 // Parliamentary speech schema
 export const parliamentarySpeeches = pgTable("parliamentary_speeches", {
   id: serial("id").primaryKey(),

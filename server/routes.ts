@@ -9,13 +9,20 @@ import {
   insertBudgetSchema,
   insertRepresentativeSchema,
   insertLocationSchema,
-  insertOtpSchema
+  insertOtpSchema,
+  otpRequestSchema
 } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import session from "express-session";
 import MemoryStore from "memorystore";
 import crypto from "crypto";
+import { sendOTP, verifyOTP } from './controllers/otp';
+
+// Helper to generate a 6-digit OTP for internal use
+function generateOTP(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 const SessionStore = MemoryStore(session);
 
@@ -76,10 +83,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   };
 
-  // Generate OTP
-  const generateOTP = (): string => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  };
+  // We already have a generateOTP function at the top of the file
 
   // All API routes should be prefixed with /api
   const apiRouter = express.Router();
@@ -191,44 +195,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // OTP routes
-  apiRouter.post("/auth/send-otp", validateRequest(insertOtpSchema), async (req, res) => {
-    try {
-      const { phone } = req.body;
-      
-      // Generate OTP
-      const otpCode = generateOTP();
-      const expiryTime = new Date();
-      expiryTime.setMinutes(expiryTime.getMinutes() + 10); // OTP valid for 10 minutes
-      
-      await storage.createOTP({
-        phone,
-        otp: otpCode,
-        expiresAt: expiryTime
-      });
-      
-      // In a real app, we would send SMS here
-      console.log(`OTP for ${phone}: ${otpCode}`);
-      
-      res.json({ message: "OTP sent successfully", expiresAt: expiryTime });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to send OTP" });
-    }
-  });
-
-  apiRouter.post("/auth/verify-otp", async (req, res) => {
-    try {
-      const { phone, otp } = req.body;
-      
-      const isValid = await storage.verifyOTP(phone, otp);
-      if (!isValid) {
-        return res.status(400).json({ message: "Invalid or expired OTP" });
-      }
-      
-      res.json({ message: "OTP verified successfully", verified: true });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to verify OTP" });
-    }
-  });
+  apiRouter.post("/auth/send-otp", validateRequest(otpRequestSchema), sendOTP);
+  apiRouter.post("/auth/verify-otp", verifyOTP);
 
   // Location routes
   apiRouter.get("/locations", async (req, res) => {

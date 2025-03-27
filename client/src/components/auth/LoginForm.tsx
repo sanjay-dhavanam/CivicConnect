@@ -93,10 +93,24 @@ export function LoginForm() {
     setError(null);
     
     if (!otpSent) {
-      // First send OTP
+      // First validate the phone number
+      if (!data.phone || data.phone.length < 10) {
+        setError("Please enter a valid phone number with at least 10 digits");
+        return;
+      }
+      
+      // Send OTP
+      console.log("Sending OTP to:", data.phone);
       sendOtpMutation.mutate(data.phone);
     } else {
-      // Then verify OTP and login
+      // Validate OTP
+      if (!otpValue || otpValue.length !== 6) {
+        setError("Please enter a valid 6-digit OTP");
+        return;
+      }
+      
+      // Verify OTP and login
+      console.log("Verifying OTP:", otpValue, "for phone:", data.phone);
       verifyOtpMutation.mutate({ phone: data.phone, otp: otpValue });
     }
   }

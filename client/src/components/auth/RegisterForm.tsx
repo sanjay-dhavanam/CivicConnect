@@ -110,12 +110,38 @@ export function RegisterForm() {
     setError(null);
     
     if (!otpSent) {
+      // Validate phone number
+      if (!data.phone || data.phone.length < 10) {
+        setError("Please enter a valid phone number with at least 10 digits");
+        return;
+      }
+      
+      // Validate Aadhaar number
+      if (!data.aadhaarNumber || data.aadhaarNumber.length !== 12) {
+        setError("Please enter a valid 12-digit Aadhaar number");
+        return;
+      }
+      
+      // Validate password matching
+      if (data.password !== data.confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+      
       // First validate form and send OTP
       if (form.formState.isValid) {
+        console.log("Sending OTP to:", data.phone);
         sendOtpMutation.mutate(data.phone);
       }
     } else {
+      // Validate OTP
+      if (!otpValue || otpValue.length !== 6) {
+        setError("Please enter a valid 6-digit OTP");
+        return;
+      }
+      
       // Then verify OTP and register
+      console.log("Verifying OTP:", otpValue, "for phone:", data.phone);
       verifyOtpMutation.mutate({ phone: data.phone, otp: otpValue });
     }
   }

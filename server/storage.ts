@@ -350,31 +350,52 @@ export class MemStorage implements IStorage {
   }
 
   // OTP operations
-  async createOTP(otpData: InsertOTP): Promise<OTP> {
+  async createOTP(otpData: { phone: string; otp: string; expiresAt: Date; verified?: boolean }): Promise<OTP> {
     const id = this.otpIdCounter++;
     const now = new Date();
+    
     const newOTP: OTP = { 
-      ...otpData, 
-      id, 
-      verified: false, 
+      id,
+      phone: otpData.phone,
+      otp: otpData.otp,
+      expiresAt: otpData.expiresAt,
+      verified: otpData.verified || false,
       createdAt: now
     };
+    
+    console.log(`Creating OTP with ID ${id}: ${JSON.stringify({...newOTP, expiresAt: newOTP.expiresAt.toISOString()})}`);
     this.otps.set(id, newOTP);
     return newOTP;
   }
 
   async verifyOTP(phone: string, otpCode: string): Promise<boolean> {
-    const otp = Array.from(this.otps.values()).find(
-      otp => otp.phone === phone && otp.otp === otpCode && otp.expiresAt > new Date() && !otp.verified
-    );
+    const now = new Date();
+    console.log(`Storage: Verifying OTP for phone ${phone}, code ${otpCode}, current time: ${now.toISOString()}`);
+    
+    // Get all OTPs for this phone number
+    const otpsForPhone = Array.from(this.otps.values()).filter(otp => otp.phone === phone);
+    console.log(`Found ${otpsForPhone.length} OTPs for phone ${phone}`);
+    
+    // Find the valid OTP
+    const otp = otpsForPhone.find(otp => {
+      const isMatch = otp.otp === otpCode;
+      const isNotExpired = otp.expiresAt > now;
+      const isNotVerified = !otp.verified;
+      
+      console.log(`OTP ID ${otp.id}: Match=${isMatch}, NotExpired=${isNotExpired} (expires: ${otp.expiresAt.toISOString()}), NotVerified=${isNotVerified}`);
+      
+      return isMatch && isNotExpired && isNotVerified;
+    });
     
     if (otp) {
       // Mark OTP as verified
       const verifiedOTP = { ...otp, verified: true };
       this.otps.set(otp.id, verifiedOTP);
+      console.log(`OTP ${otpCode} verified successfully for ${phone}`);
       return true;
     }
     
+    console.log(`OTP ${otpCode} verification failed for ${phone}`);
     return false;
   }
 
