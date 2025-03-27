@@ -8,7 +8,7 @@ import { useLocation } from "wouter";
 
 export function RecentIssues() {
   const { data: issues, isLoading } = useIssues();
-  const [showCount, setShowCount] = useState(3);
+  const [showCount, setShowCount] = useState(6); // Increased the initial count to 6 since we have more width
   const [, navigate] = useLocation();
   
   // Sort issues by recency 
@@ -20,7 +20,7 @@ export function RecentIssues() {
   const recentIssues = sortedIssues?.slice(0, showCount);
   
   const loadMore = () => {
-    setShowCount(prev => prev + 3);
+    setShowCount(prev => prev + 6); // Increased to load 6 at a time
   };
 
   return (
@@ -35,12 +35,12 @@ export function RecentIssues() {
         </Button>
       </CardHeader>
       
-      <CardContent className="p-0">
-        <div className="divide-y divide-gray-200">
+      <CardContent className="p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {isLoading ? (
             // Loading placeholders
-            Array(3).fill(0).map((_, index) => (
-              <div key={index} className="p-4">
+            Array(6).fill(0).map((_, index) => (
+              <div key={index} className="p-4 border border-gray-200 rounded-lg">
                 <div className="flex items-start">
                   <Skeleton className="w-10 h-10 rounded-full flex-shrink-0" />
                   <div className="ml-3 flex-1">
@@ -57,10 +57,12 @@ export function RecentIssues() {
             ))
           ) : recentIssues && recentIssues.length > 0 ? (
             recentIssues.map(issue => (
-              <IssueCard key={issue.id} issue={issue} />
+              <div key={issue.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                <IssueCard issue={issue} />
+              </div>
             ))
           ) : (
-            <div className="p-6 text-center text-gray-500">
+            <div className="p-6 text-center text-gray-500 col-span-full">
               No issues reported yet. Be the first to report an issue!
             </div>
           )}

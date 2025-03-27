@@ -5,7 +5,6 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { TabNavigation } from "@/components/layout/TabNavigation";
 import { Footer } from "@/components/layout/Footer";
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { IssueMap } from "@/components/dashboard/IssueMap";
 import { RecentIssues } from "@/components/dashboard/RecentIssues";
 import { BudgetOverview } from "@/components/dashboard/BudgetOverview";
 import { RepresentativesList } from "@/components/dashboard/RepresentativesList";
@@ -86,11 +85,8 @@ export default function Home() {
             {/* Dashboard Stats */}
             <DashboardStats />
 
-            {/* Map and Recent Issues */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <IssueMap />
-              </div>
+            {/* Recent Issues */}
+            <div className="mb-6">
               <RecentIssues />
             </div>
 
