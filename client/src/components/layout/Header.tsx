@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import logoImage from "../../assets/CIVICAMP-logo.png";
 
 export function Header() {
   const [, navigate] = useLocation();
@@ -38,12 +39,9 @@ export function Header() {
         <div className="flex items-center space-x-2">
           <Link href="/">
             <a className="flex items-center space-x-2">
-              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold">
-                HG
-              </div>
-              <h1 className="text-xl font-poppins font-semibold text-primary">
-                <span className="hidden sm:inline">HackHive</span>
-                <span className="text-secondary">Gov</span>
+              <img src={logoImage} alt="CIVICAMP Logo" className="h-12" />
+              <h1 className="text-2xl font-bold text-black">
+                CIVICAMP
               </h1>
             </a>
           </Link>

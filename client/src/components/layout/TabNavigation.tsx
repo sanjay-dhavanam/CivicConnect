@@ -1,10 +1,18 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import { 
+  Home, 
+  AlertTriangle, 
+  List, 
+  PieChart, 
+  UserCheck, 
+  Building 
+} from "lucide-react";
 
 interface NavigationTab {
   id: string;
   label: string;
-  icon: string;
+  icon: React.ReactNode;
   path: string;
 }
 
@@ -15,37 +23,37 @@ export function TabNavigation() {
     {
       id: "dashboard",
       label: "Dashboard",
-      icon: "ri-dashboard-line",
+      icon: <Home size={18} />,
       path: "/",
     },
     {
       id: "report-issue",
       label: "Report Issue",
-      icon: "ri-error-warning-line",
+      icon: <AlertTriangle size={18} />,
       path: "/report-issue",
     },
     {
       id: "issues",
       label: "Issues",
-      icon: "ri-list-check-2",
+      icon: <List size={18} />,
       path: "/issues",
     },
     {
       id: "budget",
       label: "Public Funds",
-      icon: "ri-funds-line",
+      icon: <PieChart size={18} />,
       path: "/budget",
     },
     {
       id: "representatives",
       label: "Representatives",
-      icon: "ri-user-star-line",
+      icon: <UserCheck size={18} />,
       path: "/representatives",
     },
     {
       id: "parliamentary",
       label: "Parliament Updates",
-      icon: "ri-government-line",
+      icon: <Building size={18} />,
       path: "/parliamentary",
     },
   ];
@@ -70,7 +78,7 @@ export function TabNavigation() {
                     : "text-gray-600 hover:text-primary"
                 )}
               >
-                <i className={`${tab.icon} mr-2`}></i>
+                <span className="mr-2">{tab.icon}</span>
                 {tab.label}
               </a>
             </Link>
