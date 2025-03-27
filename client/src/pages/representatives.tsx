@@ -90,13 +90,13 @@ export default function Representatives() {
                 <div>
                   <Select 
                     value={filters.position} 
-                    onValueChange={(value) => setFilters({ ...filters, position: value })}
+                    onValueChange={(value) => setFilters({ ...filters, position: value === "all" ? "" : value })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Filter by position" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Positions</SelectItem>
+                      <SelectItem value="all">All Positions</SelectItem>
                       {positions.map(position => (
                         <SelectItem key={position} value={position}>
                           {position}
@@ -109,13 +109,13 @@ export default function Representatives() {
                 <div>
                   <Select 
                     value={filters.party} 
-                    onValueChange={(value) => setFilters({ ...filters, party: value })}
+                    onValueChange={(value) => setFilters({ ...filters, party: value === "all" ? "" : value })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Filter by party" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Parties</SelectItem>
+                      <SelectItem value="all">All Parties</SelectItem>
                       {parties.map(party => (
                         <SelectItem key={party} value={party}>
                           {party}

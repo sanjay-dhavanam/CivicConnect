@@ -15,8 +15,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Issues() {
-  const [location, searchParams] = useLocation();
-  const [, navigate] = useLocation();
+  const [location, setLocation] = useLocation();
+  const searchParams = new URLSearchParams(location.split('?')[1] || '');
   const [viewType, setViewType] = useState<string>("list");
   const [filters, setFilters] = useState({
     status: "",
@@ -76,7 +76,9 @@ export default function Issues() {
 
   // Handle filter changes
   const handleFilterChange = (name: string, value: string) => {
-    const newFilters = { ...filters, [name]: value };
+    // Convert "all" value to empty string for filter processing
+    const actualValue = value === "all" ? "" : value;
+    const newFilters = { ...filters, [name]: actualValue };
     setFilters(newFilters);
     
     // Update URL with new filters
@@ -87,7 +89,7 @@ export default function Issues() {
     if (newFilters.priority) params.append("priority", newFilters.priority);
     if (newFilters.search) params.append("search", newFilters.search);
     
-    navigate(`/issues?${params.toString()}`);
+    setLocation(`/issues?${params.toString()}`);
   };
 
   // Handle search
@@ -121,7 +123,7 @@ export default function Issues() {
                     } else {
                       params.delete("view");
                     }
-                    navigate(`/issues?${params.toString()}`);
+                    setLocation(`/issues?${params.toString()}`);
                   }}>
                     <TabsList>
                       <TabsTrigger value="list">List View</TabsTrigger>
@@ -174,7 +176,7 @@ export default function Issues() {
                       <SelectValue placeholder="Filter by status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Statuses</SelectItem>
+                      <SelectItem value="all">All Statuses</SelectItem>
                       <SelectItem value="pending">Pending</SelectItem>
                       <SelectItem value="in_progress">In Progress</SelectItem>
                       <SelectItem value="resolved">Resolved</SelectItem>
@@ -191,7 +193,7 @@ export default function Issues() {
                       <SelectValue placeholder="Filter by type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
+                      <SelectItem value="all">All Types</SelectItem>
                       <SelectItem value="roads">Roads & Infrastructure</SelectItem>
                       <SelectItem value="water">Water Supply</SelectItem>
                       <SelectItem value="electricity">Electricity</SelectItem>
@@ -253,7 +255,7 @@ export default function Issues() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex justify-center pb-6">
-                    <Button onClick={() => navigate("/report-issue")}>
+                    <Button onClick={() => setLocation("/report-issue")}>
                       Report an Issue
                     </Button>
                   </CardContent>
