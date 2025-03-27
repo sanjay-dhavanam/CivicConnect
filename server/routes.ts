@@ -229,14 +229,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Issue routes
-  apiRouter.post("/issues", isAuthenticated, validateRequest(insertIssueSchema), async (req, res) => {
+  apiRouter.post("/issues", validateRequest(insertIssueSchema), async (req, res) => {
     try {
+      // Set a default reportedBy ID for anonymous reports (1 is a system user ID)
+      const reportedBy = req.session.userId || 1; // 1 is our system user for anonymous reports
+      
       const issue = await storage.createIssue({
         ...req.body,
-        reportedBy: req.session.userId!
+        reportedBy
       });
       res.status(201).json(issue);
     } catch (error) {
+      console.error("Error creating issue:", error);
       res.status(500).json({ message: "Failed to create issue" });
     }
   });
