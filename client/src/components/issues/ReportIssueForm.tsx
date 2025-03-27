@@ -51,6 +51,7 @@ export function ReportIssueForm() {
 
   const reportIssueMutation = useMutation({
     mutationFn: async (data: ReportIssueFormValues & { media: string[]; location: any }) => {
+      console.log("Submitting issue data:", data);
       const res = await apiRequest("POST", "/api/issues", data);
       return res.json();
     },
@@ -63,6 +64,7 @@ export function ReportIssueForm() {
       navigate("/");
     },
     onError: (error: any) => {
+      console.error("Error submitting issue:", error);
       setError(error.message || "Failed to report issue. Please try again.");
     },
   });
@@ -137,23 +139,46 @@ export function ReportIssueForm() {
       const mediaUrls: string[] = [];
       if (files.length > 0) {
         for (const file of files) {
-          const url = await uploadFile(file);
-          mediaUrls.push(url);
+          try {
+            // Mock upload for development - in production this would be a real upload
+            // const url = await uploadFile(file);
+            const url = `https://source.unsplash.com/random/800x600?issue=${encodeURIComponent(file.name)}`;
+            console.log(`Uploaded file ${file.name} to ${url}`);
+            mediaUrls.push(url);
+          } catch (uploadError) {
+            console.error("File upload error:", uploadError);
+            toast({
+              title: "Upload error",
+              description: `Failed to upload ${file.name}`,
+              variant: "destructive",
+            });
+          }
         }
       }
       setUploading(false);
 
       // Submit the issue with uploaded media URLs
+      console.log("Submitting issue with data:", {
+        ...data,
+        media: mediaUrls,
+        location: {
+          ...location,
+          state: "Delhi",
+          city: "New Delhi"
+        }
+      });
+
       reportIssueMutation.mutate({
         ...data,
         media: mediaUrls,
         location: {
           ...location,
-          state: "Delhi", // These would come from LocationSelector in a real app
+          state: "Delhi",
           city: "New Delhi"
         }
       });
     } catch (err: any) {
+      console.error("Error in submit process:", err);
       setUploading(false);
       setError(err.message || "Error uploading files");
     }

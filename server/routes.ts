@@ -234,14 +234,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Set a default reportedBy ID for anonymous reports (1 is a system user ID)
       const reportedBy = req.session.userId || 1; // 1 is our system user for anonymous reports
       
-      const issue = await storage.createIssue({
+      console.log("Received issue data:", req.body);
+      
+      // Extract the data we need, making sure to handle required fields
+      const issueData = {
         ...req.body,
-        reportedBy
-      });
+        reportedBy,
+        status: req.body.status || "pending",
+        priority: req.body.priority || "medium"
+      };
+      
+      console.log("Processing issue creation with data:", issueData);
+      
+      const issue = await storage.createIssue(issueData);
+      console.log("Issue created successfully:", issue);
+      
       res.status(201).json(issue);
     } catch (error) {
       console.error("Error creating issue:", error);
-      res.status(500).json({ message: "Failed to create issue" });
+      res.status(500).json({ message: "Failed to create issue", error: String(error) });
     }
   });
 
