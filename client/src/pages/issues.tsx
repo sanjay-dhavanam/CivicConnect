@@ -19,9 +19,9 @@ export default function Issues() {
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
   const [viewType, setViewType] = useState<string>("list");
   const [filters, setFilters] = useState({
-    status: "",
-    type: "",
-    priority: "",
+    status: "all",
+    type: "all",
+    priority: "all",
     search: "",
   });
 
@@ -34,9 +34,9 @@ export default function Issues() {
     }
     
     setFilters({
-      status: params.get("status") || "",
-      type: params.get("type") || "",
-      priority: params.get("priority") || "",
+      status: params.get("status") || "all",
+      type: params.get("type") || "all",
+      priority: params.get("priority") || "all",
       search: params.get("search") || "",
     });
   }, [searchParams]);
@@ -48,15 +48,15 @@ export default function Issues() {
   const filteredIssues = issues?.filter(issue => {
     let matches = true;
     
-    if (filters.status && issue.status !== filters.status) {
+    if (filters.status && filters.status !== "all" && issue.status !== filters.status) {
       matches = false;
     }
     
-    if (filters.type && issue.type !== filters.type) {
+    if (filters.type && filters.type !== "all" && issue.type !== filters.type) {
       matches = false;
     }
     
-    if (filters.priority && issue.priority !== filters.priority) {
+    if (filters.priority && filters.priority !== "all" && issue.priority !== filters.priority) {
       matches = false;
     }
     
@@ -76,17 +76,15 @@ export default function Issues() {
 
   // Handle filter changes
   const handleFilterChange = (name: string, value: string) => {
-    // Convert "all" value to empty string for filter processing
-    const actualValue = value === "all" ? "" : value;
-    const newFilters = { ...filters, [name]: actualValue };
+    const newFilters = { ...filters, [name]: value };
     setFilters(newFilters);
     
     // Update URL with new filters
     const params = new URLSearchParams();
     if (viewType === "map") params.append("view", "map");
-    if (newFilters.status) params.append("status", newFilters.status);
-    if (newFilters.type) params.append("type", newFilters.type);
-    if (newFilters.priority) params.append("priority", newFilters.priority);
+    if (newFilters.status && newFilters.status !== "all") params.append("status", newFilters.status);
+    if (newFilters.type && newFilters.type !== "all") params.append("type", newFilters.type);
+    if (newFilters.priority && newFilters.priority !== "all") params.append("priority", newFilters.priority);
     if (newFilters.search) params.append("search", newFilters.search);
     
     setLocation(`/issues?${params.toString()}`);

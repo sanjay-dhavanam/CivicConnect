@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-semibold mb-4 font-poppins text-primary">
-              HackHive Gov
+              CIVICAMP
             </h3>
             <p className="text-gray-600 text-sm">
               Connecting citizens with local authorities for transparent
@@ -19,24 +19,16 @@ export function Footer() {
             <h4 className="font-medium mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about">
-                  <a className="text-gray-600 hover:text-primary">About Us</a>
-                </Link>
+                <a href="/about" className="text-gray-600 hover:text-primary">About Us</a>
               </li>
               <li>
-                <Link href="/how-it-works">
-                  <a className="text-gray-600 hover:text-primary">How It Works</a>
-                </Link>
+                <a href="/how-it-works" className="text-gray-600 hover:text-primary">How It Works</a>
               </li>
               <li>
-                <Link href="/success-stories">
-                  <a className="text-gray-600 hover:text-primary">Success Stories</a>
-                </Link>
+                <a href="/success-stories" className="text-gray-600 hover:text-primary">Success Stories</a>
               </li>
               <li>
-                <Link href="/faq">
-                  <a className="text-gray-600 hover:text-primary">FAQ</a>
-                </Link>
+                <a href="/faq" className="text-gray-600 hover:text-primary">FAQ</a>
               </li>
             </ul>
           </div>
@@ -45,24 +37,16 @@ export function Footer() {
             <h4 className="font-medium mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/open-data">
-                  <a className="text-gray-600 hover:text-primary">Open Data</a>
-                </Link>
+                <a href="/open-data" className="text-gray-600 hover:text-primary">Open Data</a>
               </li>
               <li>
-                <Link href="/api-docs">
-                  <a className="text-gray-600 hover:text-primary">API Documentation</a>
-                </Link>
+                <a href="/api-docs" className="text-gray-600 hover:text-primary">API Documentation</a>
               </li>
               <li>
-                <Link href="/govt-portals">
-                  <a className="text-gray-600 hover:text-primary">Government Portals</a>
-                </Link>
+                <a href="/govt-portals" className="text-gray-600 hover:text-primary">Government Portals</a>
               </li>
               <li>
-                <Link href="/privacy-policy">
-                  <a className="text-gray-600 hover:text-primary">Privacy Policy</a>
-                </Link>
+                <a href="/privacy-policy" className="text-gray-600 hover:text-primary">Privacy Policy</a>
               </li>
             </ul>
           </div>
@@ -121,24 +105,18 @@ export function Footer() {
 
         <div className="border-t border-gray-200 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 text-sm">
-            &copy; {new Date().getFullYear()} HackHive Gov. All rights reserved.
+            &copy; {new Date().getFullYear()} CIVICAMP. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0">
             <ul className="flex space-x-6 text-sm">
               <li>
-                <Link href="/terms">
-                  <a className="text-gray-600 hover:text-primary">Terms</a>
-                </Link>
+                <a href="/terms" className="text-gray-600 hover:text-primary">Terms</a>
               </li>
               <li>
-                <Link href="/privacy">
-                  <a className="text-gray-600 hover:text-primary">Privacy</a>
-                </Link>
+                <a href="/privacy" className="text-gray-600 hover:text-primary">Privacy</a>
               </li>
               <li>
-                <Link href="/cookies">
-                  <a className="text-gray-600 hover:text-primary">Cookies</a>
-                </Link>
+                <a href="/cookies" className="text-gray-600 hover:text-primary">Cookies</a>
               </li>
             </ul>
           </div>

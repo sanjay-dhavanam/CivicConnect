@@ -37,14 +37,12 @@ export function Header() {
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <Link href="/">
-            <a className="flex items-center space-x-2">
-              <img src={logoImage} alt="CIVICAMP Logo" className="h-12" />
-              <h1 className="text-2xl font-bold text-black">
-                CIVICAMP
-              </h1>
-            </a>
-          </Link>
+          <a href="/" className="flex items-center space-x-2">
+            <img src={logoImage} alt="CIVICAMP Logo" className="h-12" />
+            <h1 className="text-2xl font-bold text-black">
+              CIVICAMP
+            </h1>
+          </a>
         </div>
 
         <div className="flex-1 max-w-md mx-4 hidden md:block">
@@ -79,11 +77,9 @@ export function Header() {
         </div>
 
         <nav className="flex items-center space-x-5">
-          <Link href="/help">
-            <a className="text-gray-600 hover:text-primary transition hidden md:block">
-              Help
-            </a>
-          </Link>
+          <a href="/help" className="text-gray-600 hover:text-primary transition hidden md:block">
+            Help
+          </a>
 
           {user ? (
             <DropdownMenu>

@@ -104,7 +104,7 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-primary">Login to HackHive Gov</CardTitle>
+        <CardTitle className="text-2xl font-bold text-primary">Login to CIVICAMP</CardTitle>
         <CardDescription>
           Enter your phone number and password to access your account
         </CardDescription>

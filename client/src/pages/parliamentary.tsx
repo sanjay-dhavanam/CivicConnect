@@ -19,9 +19,9 @@ import { format } from "date-fns";
 export default function Parliamentary() {
   const { toast } = useToast();
   const [filters, setFilters] = useState({
-    house: "",
-    language: "",
-    speakerId: "",
+    house: "all",
+    language: "all",
+    speakerId: "all",
   });
   const [selectedSpeech, setSelectedSpeech] = useState<ParliamentarySpeech | null>(null);
   const [translationLanguage, setTranslationLanguage] = useState("hindi");
@@ -35,15 +35,15 @@ export default function Parliamentary() {
   const filteredSpeeches = speeches?.filter(speech => {
     let matches = true;
     
-    if (filters.house && speech.house !== filters.house) {
+    if (filters.house && filters.house !== "all" && speech.house !== filters.house) {
       matches = false;
     }
     
-    if (filters.language && speech.originalLanguage !== filters.language) {
+    if (filters.language && filters.language !== "all" && speech.originalLanguage !== filters.language) {
       matches = false;
     }
     
-    if (filters.speakerId && speech.speakerId.toString() !== filters.speakerId) {
+    if (filters.speakerId && filters.speakerId !== "all" && speech.speakerId.toString() !== filters.speakerId) {
       matches = false;
     }
     
@@ -85,8 +85,12 @@ export default function Parliamentary() {
   });
   
   // Get unique houses, languages, and speakers for filters
-  const houses = [...new Set(speeches?.map(speech => speech.house) || [])];
-  const languages = [...new Set(speeches?.map(speech => speech.originalLanguage) || [])];
+  const houses = speeches 
+    ? Array.from(new Set(speeches.map(speech => speech.house)))
+    : [];
+  const languages = speeches
+    ? Array.from(new Set(speeches.map(speech => speech.originalLanguage)))
+    : [];
   const speakers = speeches?.reduce((acc, speech) => {
     if (!acc.some(s => s.id === speech.speakerId)) {
       acc.push({ id: speech.speakerId, name: `Speaker ${speech.speakerId}` }); // In real app, would fetch speaker names
@@ -142,7 +146,7 @@ export default function Parliamentary() {
                       <SelectValue placeholder="Filter by house" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Houses</SelectItem>
+                      <SelectItem value="all">All Houses</SelectItem>
                       {houses.map(house => (
                         <SelectItem key={house} value={house}>
                           {house}
@@ -161,7 +165,7 @@ export default function Parliamentary() {
                       <SelectValue placeholder="Filter by language" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Languages</SelectItem>
+                      <SelectItem value="all">All Languages</SelectItem>
                       {languages.map(language => (
                         <SelectItem key={language} value={language}>
                           {language.charAt(0).toUpperCase() + language.slice(1)}
@@ -180,7 +184,7 @@ export default function Parliamentary() {
                       <SelectValue placeholder="Filter by speaker" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Speakers</SelectItem>
+                      <SelectItem value="all">All Speakers</SelectItem>
                       {speakers.map(speaker => (
                         <SelectItem key={speaker.id} value={speaker.id.toString()}>
                           {speaker.name}

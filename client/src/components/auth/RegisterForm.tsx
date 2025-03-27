@@ -123,7 +123,7 @@ export function RegisterForm() {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-primary">Register for HackHive Gov</CardTitle>
+        <CardTitle className="text-2xl font-bold text-primary">Register for CIVICAMP</CardTitle>
         <CardDescription>
           Create an account to report issues and engage with your local government
         </CardDescription>

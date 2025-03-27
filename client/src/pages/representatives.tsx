@@ -13,8 +13,8 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Representatives() {
   const [filters, setFilters] = useState({
-    position: "",
-    party: "",
+    position: "all",
+    party: "all",
     search: "",
   });
   
@@ -24,11 +24,11 @@ export default function Representatives() {
   const filteredRepresentatives = representatives?.filter(rep => {
     let matches = true;
     
-    if (filters.position && rep.position !== filters.position) {
+    if (filters.position && filters.position !== "all" && rep.position !== filters.position) {
       matches = false;
     }
     
-    if (filters.party && rep.party !== filters.party) {
+    if (filters.party && filters.party !== "all" && rep.party !== filters.party) {
       matches = false;
     }
     
@@ -47,8 +47,13 @@ export default function Representatives() {
   });
   
   // Get unique positions and parties for filters
-  const positions = [...new Set(representatives?.map(rep => rep.position) || [])];
-  const parties = [...new Set(representatives?.map(rep => rep.party).filter(Boolean) || [])];
+  const positions = representatives 
+    ? Array.from(new Set(representatives.map(rep => rep.position)))
+    : [];
+  
+  const parties = representatives 
+    ? Array.from(new Set(representatives.map(rep => rep.party).filter(Boolean) as string[]))
+    : [];
   
   // Helper function to get initials
   const getInitials = (name: string) => {
@@ -90,7 +95,7 @@ export default function Representatives() {
                 <div>
                   <Select 
                     value={filters.position} 
-                    onValueChange={(value) => setFilters({ ...filters, position: value === "all" ? "" : value })}
+                    onValueChange={(value) => setFilters({ ...filters, position: value })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Filter by position" />
@@ -109,7 +114,7 @@ export default function Representatives() {
                 <div>
                   <Select 
                     value={filters.party} 
-                    onValueChange={(value) => setFilters({ ...filters, party: value === "all" ? "" : value })}
+                    onValueChange={(value) => setFilters({ ...filters, party: value })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Filter by party" />

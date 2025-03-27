@@ -69,19 +69,19 @@ export function TabNavigation() {
       <div className="container mx-auto">
         <nav className="flex overflow-x-auto py-1 px-4 scrollbar-hide">
           {navigationTabs.map((tab) => (
-            <Link key={tab.id} href={tab.path}>
-              <a
-                className={cn(
-                  "flex items-center px-4 py-2 mx-1 whitespace-nowrap",
-                  isActive(tab.path)
-                    ? "text-primary border-b-2 border-primary font-medium"
-                    : "text-gray-600 hover:text-primary"
-                )}
-              >
-                <span className="mr-2">{tab.icon}</span>
-                {tab.label}
-              </a>
-            </Link>
+            <a 
+              key={tab.id}
+              href={tab.path}
+              className={cn(
+                "flex items-center px-4 py-2 mx-1 whitespace-nowrap",
+                isActive(tab.path)
+                  ? "text-primary border-b-2 border-primary font-medium"
+                  : "text-gray-600 hover:text-primary"
+              )}
+            >
+              <span className="mr-2">{tab.icon}</span>
+              {tab.label}
+            </a>
           ))}
         </nav>
       </div>

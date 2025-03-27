@@ -13,8 +13,8 @@ import { formatCurrency } from "@/lib/utils";
 
 export default function Budget() {
   const [filters, setFilters] = useState({
-    fiscalYear: "",
-    category: "",
+    fiscalYear: "all",
+    category: "all",
   });
   
   const { data: budgets, isLoading } = useBudgetData();
@@ -23,11 +23,11 @@ export default function Budget() {
   const filteredBudgets = budgets?.filter(budget => {
     let matches = true;
     
-    if (filters.fiscalYear && budget.fiscalYear !== filters.fiscalYear) {
+    if (filters.fiscalYear && filters.fiscalYear !== "all" && budget.fiscalYear !== filters.fiscalYear) {
       matches = false;
     }
     
-    if (filters.category && budget.category !== filters.category) {
+    if (filters.category && filters.category !== "all" && budget.category !== filters.category) {
       matches = false;
     }
     
@@ -58,10 +58,14 @@ export default function Budget() {
   }, {} as Record<string, number>) || {};
   
   // Get unique fiscal years for filter
-  const fiscalYears = [...new Set(budgets?.map(budget => budget.fiscalYear) || [])];
+  const fiscalYears = budgets
+    ? Array.from(new Set(budgets.map(budget => budget.fiscalYear)))
+    : [];
   
   // Get unique categories for filter
-  const categories = [...new Set(budgets?.map(budget => budget.category) || [])];
+  const categories = budgets
+    ? Array.from(new Set(budgets.map(budget => budget.category)))
+    : [];
   
   // Helper function to get category color
   const getCategoryColor = (category: string): string => {
@@ -107,7 +111,7 @@ export default function Budget() {
                       <SelectValue placeholder="Select fiscal year" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Fiscal Years</SelectItem>
+                      <SelectItem value="all">All Fiscal Years</SelectItem>
                       {fiscalYears.map(year => (
                         <SelectItem key={year} value={year}>
                           {year}
@@ -126,7 +130,7 @@ export default function Budget() {
                       <SelectValue placeholder="Filter by category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Categories</SelectItem>
+                      <SelectItem value="all">All Categories</SelectItem>
                       {categories.map(category => (
                         <SelectItem key={category} value={category}>
                           {category}
@@ -262,8 +266,7 @@ export default function Budget() {
                               </div>
                               <Progress
                                 value={(amount / totalAllocated) * 100}
-                                className="h-4 bg-gray-200"
-                                indicatorClassName={getCategoryColor(category)}
+                                className={`h-4 bg-gray-200 ${getCategoryColor(category)}`}
                               />
                             </div>
                           ))}
