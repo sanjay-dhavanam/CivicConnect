@@ -10,6 +10,8 @@ import Issues from "@/pages/issues";
 import Representatives from "@/pages/representatives";
 import Budget from "@/pages/budget";
 import Parliamentary from "@/pages/parliamentary";
+import About from "@/pages/about";
+import HowItWorks from "@/pages/how-it-works";
 import { useAuth } from "@/hooks/useAuth";
 
 function Router() {
@@ -35,6 +37,8 @@ function Router() {
       <Route path="/representatives" component={Representatives} />
       <Route path="/budget" component={Budget} />
       <Route path="/parliamentary" component={Parliamentary} />
+      <Route path="/about" component={About} />
+      <Route path="/how-it-works" component={HowItWorks} />
       <Route component={NotFound} />
     </Switch>
   );
