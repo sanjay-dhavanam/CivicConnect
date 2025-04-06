@@ -120,7 +120,7 @@ The website will be available at: http://localhost:3000/
 We welcome contributions! If you have suggestions or find any issues, please open an issue or submit a pull request.
 
 ## Team HackHive 
-- Anagha Parameshwar
+- Anagha Parameswar
 - Shravya Hegde
 - Yasmeen Taj
 
