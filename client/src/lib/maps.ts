@@ -5,7 +5,9 @@ declare global {
   }
 }
 
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "AIzaSyBgQF7V2-5UEn4AwXsTb5mjRipKbjhpfZ8"; // Default key should be replaced with actual key from environment variables
+// Get the API key from the environment variable.
+// We use 'process.env.REACT_APP_GOOGLE_MAPS_API_KEY' because that's the format Render uses.
+const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "AIzaSyBgQF7V2-5UEn4AwXsTb5mjRipKbjhpfZ8"; 
 
 // Load Google Maps API
 export function getGoogleMaps(): Promise<any> {
