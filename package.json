@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "tsx server/index.ts",
-    "build": "npm ci --legacy-peer-deps && npm run build-client && npm run build-server",
+    "build": "npm ci --force && npm run build-client && npm run build-server",
     "build-client": "vite build",
     "build-server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "node dist/index.js",
