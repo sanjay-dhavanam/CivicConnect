@@ -119,18 +119,6 @@ The website will be available at: http://localhost:3000/
 
 We welcome contributions! If you have suggestions or find any issues, please open an issue or submit a pull request.
 
-## Team HackHive 
-- Anagha Parameswar
-- Shravya Hegde
-- Yasmeen Taj
-
-
-## For any inquiries or collaboration:
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/yasmeen-taj-77a2b5315)
-[![GitHub](https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github)](https://github.com/yasmeen-taj111)
-[![YouTube](https://img.shields.io/badge/YouTube-red?style=for-the-badge&logo=youtube)](https://youtube.com/@yasmeentaj1111?si=zPFZlnB-HRhF3L1V)
-[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:yasmeentaj.6042@gmail.com)
 
 
 
